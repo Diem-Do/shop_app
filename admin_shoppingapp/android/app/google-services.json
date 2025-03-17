@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "433240383928",
+    "project_id": "flutter-apps-d8288",
+    "storage_bucket": "flutter-apps-d8288.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433240383928:android:7d7e03fd60393a16046f4d",
+        "android_client_info": {
+          "package_name": "com.example.admin_shoppingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBELr1GxA2VZ3XOkcEgd5zujoQW62xywX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433240383928:android:ceee04be22c63a66046f4d",
+        "android_client_info": {
+          "package_name": "com.example.user_shoppingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBELr1GxA2VZ3XOkcEgd5zujoQW62xywX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
