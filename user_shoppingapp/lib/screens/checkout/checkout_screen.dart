@@ -11,7 +11,6 @@ import 'package:user_shoppingapp/screens/address_screen.dart';
 import 'package:user_shoppingapp/screens/checkout/widgets/order_sucess_screen.dart';
 import 'package:user_shoppingapp/screens/checkout/widgets/payment.dart';
 
-
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
 
@@ -44,7 +43,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         state: deliveryAddress['state']!,
         houseNo: deliveryAddress['houseNo']!,
         roadName: deliveryAddress['roadName']!,
-        amount: (cost * 100).toString(), 
+        amount: (cost * 100).toString(),
       );
 
       await Stripe.instance.initPaymentSheet(
@@ -207,10 +206,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     addressProvider.getDeliveryAddress(user);
                 final cart = Provider.of<CartProvider>(context, listen: false);
 
-                await initPaymentSheet(cart.totalCost - discount);
+                // await initPaymentSheet(cart.totalCost - discount);
 
                 try {
-                  await Stripe.instance.presentPaymentSheet();
+                  // await Stripe.instance.presentPaymentSheet();
 
                   List products = cart.products.asMap().entries.map((entry) {
                     int i = entry.key;

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:user_shoppingapp/provider/cart_provider.dart';
@@ -19,8 +18,7 @@ class ProductDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-            height: 80, width: 80, child: Image.network(widget.image)),
+        SizedBox(height: 80, width: 80, child: Image.network(widget.image)),
         SizedBox(width: 10),
         Expanded(
           child: Column(
@@ -30,8 +28,7 @@ class ProductDetails extends StatelessWidget {
                 widget.name,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               SizedBox(height: 6),
               Row(
@@ -39,26 +36,25 @@ class ProductDetails extends StatelessWidget {
                   Text(
                     "đ${widget.old_price}",
                     style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 10,
                         fontWeight: FontWeight.w500,
                         decoration: TextDecoration.lineThrough),
                   ),
                   SizedBox(width: 8),
                   Text(
                     "đ${widget.new_price}",
-                    style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(width: 8),
                   Icon(
                     Icons.arrow_downward,
                     color: Colors.green,
-                    size: 20,
+                    size: 14,
                   ),
                   Text(
                     "${discountPercent(widget.old_price, widget.new_price)}%",
                     style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Colors.green),
                   ),
@@ -69,8 +65,8 @@ class ProductDetails extends StatelessWidget {
         ),
         IconButton(
             onPressed: () async {
-              Provider.of<CartProvider>(context, listen: false)
-                  .deleteItem(widget.productId, widget.selectedSize, widget.selectedColor);
+              Provider.of<CartProvider>(context, listen: false).deleteItem(
+                  widget.productId, widget.selectedSize, widget.selectedColor);
             },
             icon: Icon(
               Icons.delete,

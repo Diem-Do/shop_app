@@ -1,9 +1,5 @@
-// uploading files to cloudinary
-import 'dart:convert';
-
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import "package:http/http.dart" as http;
-
+import 'dart:typed_data';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 Future<String?> uploadToCloudinary(XFile? xFile) async {
@@ -12,46 +8,28 @@ Future<String?> uploadToCloudinary(XFile? xFile) async {
     return null;
   }
 
-  // Get the Cloudinary cloud name from environment variables
-  String cloudName = dotenv.env['CLOUDINARY-CLOUD_NAME'] ?? '';
+  try {
+    // Lấy dữ liệu ảnh dưới dạng bytes
+    Uint8List fileBytes = await xFile.readAsBytes();
+    
+    // Lấy tham chiếu đến Firebase Storage
+    FirebaseStorage storage = FirebaseStorage.instance;
 
-  // Create a MultipartRequest to upload the file
-  var uri =
-      Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/image/upload");
-  var request = http.MultipartRequest("POST", uri);
+    // Tạo đường dẫn lưu trữ trong Firebase Storage (folder "uploads/")
+    String filePath = 'uploads/${xFile.name}';
 
-  // Read the file content as bytes using xFile.bytes() if it's an XFile
-  var fileBytes = await xFile.readAsBytes();
+    // Tải ảnh lên Firebase Storage
+    Reference ref = storage.ref().child(filePath);
+    UploadTask uploadTask = ref.putData(fileBytes);
 
-  var multipartFile = http.MultipartFile.fromBytes(
-    'file', // The form field name for the file
-    fileBytes,
-    filename: xFile.name, // Use the name of the XFile
-  );
+    // Chờ tải lên hoàn tất và lấy URL
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
 
-  // Add the file part to the request
-  request.files.add(multipartFile);
-
-  // Add other form fields like 'upload_preset' and 'resource_type'
-  request.fields['upload_preset'] = "Preset for shopping application";
-  request.fields['resource_type'] = "image";
-
-  // Send the request and await the response
-  var response = await request.send();
-
-  // Get the response as text
-  var responseBody = await response.stream.bytesToString();
-
-  // Print the response
-  print(responseBody);
-
-  if (response.statusCode == 200) {
-    var jsonResponse = jsonDecode(responseBody);
-    // Print the secure URL of the uploaded file
-    print("Upload successful!");
-    return jsonResponse["secure_url"];
-  } else {
-    print("Upload failed with status: ${response.statusCode}");
+    print("Upload successful! URL: $downloadUrl");
+    return downloadUrl;
+  } catch (e) {
+    print("Upload failed: $e");
     return null;
   }
 }

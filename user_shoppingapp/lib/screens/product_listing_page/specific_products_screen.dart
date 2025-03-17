@@ -5,13 +5,13 @@ import 'package:user_shoppingapp/models/product_model.dart';
 import 'package:user_shoppingapp/provider/wishlist_provider.dart';
 import 'package:user_shoppingapp/screens/product_listing_page/widgets/product_card.dart';
 
-
 class SpecificProducts extends StatelessWidget {
   const SpecificProducts({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String categoryName = args["name"];
 
     return Scaffold(
@@ -21,7 +21,8 @@ class SpecificProducts extends StatelessWidget {
         ),
       ),
       body: StreamBuilder(
-        stream: DbService().readProducts(categoryName), // Fetch products from Firebase
+        stream: DbService()
+            .readProducts(categoryName), // Fetch products from Firebase
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -30,7 +31,8 @@ class SpecificProducts extends StatelessWidget {
             return const Center(child: Text("No products found."));
           }
 
-          List<ProductsModel> products = ProductsModel.fromJsonList(snapshot.data!.docs);
+          List<ProductsModel> products =
+              ProductsModel.fromJsonList(snapshot.data!.docs);
 
           return Consumer<WishlistProvider>(
             builder: (context, wishlistProvider, _) {
@@ -40,7 +42,7 @@ class SpecificProducts extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 8.0,
                   mainAxisSpacing: 8.0,
-                  childAspectRatio: 0.7,
+                  childAspectRatio: 0.65,
                 ),
                 itemCount: products.length,
                 itemBuilder: (context, index) {

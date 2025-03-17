@@ -11,7 +11,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wishlistProvider = Provider.of<WishlistProvider>(context, listen: false);
+    final wishlistProvider =
+        Provider.of<WishlistProvider>(context, listen: false);
     final isWishlisted = wishlistProvider.isWishlisted(product.id);
 
     return GestureDetector(
@@ -43,14 +44,18 @@ class ProductCard extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
-                              product.images.isNotEmpty ? product.images.first : product.image,
+                              product.images.isNotEmpty
+                                  ? product.images.first
+                                  : product.image,
                               fit: BoxFit.contain,
-                              loadingBuilder: (context, child, loadingProgress) {
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
                                 if (loadingProgress == null) return child;
                                 return Container(
                                   color: Colors.grey[200],
                                   child: const Center(
-                                    child: Icon(Icons.image, size: 50, color: Colors.grey),
+                                    child: Icon(Icons.image,
+                                        size: 50, color: Colors.grey),
                                   ),
                                 );
                               },
@@ -58,7 +63,8 @@ class ProductCard extends StatelessWidget {
                                 return Container(
                                   color: Colors.grey[300],
                                   child: const Center(
-                                    child: Icon(Icons.broken_image, size: 50, color: Colors.grey),
+                                    child: Icon(Icons.broken_image,
+                                        size: 50, color: Colors.grey),
                                   ),
                                 );
                               },
@@ -83,7 +89,9 @@ class ProductCard extends StatelessWidget {
                           ),
                           child: IconButton(
                             icon: Icon(
-                              isWishlisted ? Icons.favorite : Icons.favorite_border,
+                              isWishlisted
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
                               color: isWishlisted ? Colors.red : Colors.grey,
                             ),
                             onPressed: () {
@@ -91,7 +99,9 @@ class ProductCard extends StatelessWidget {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    isWishlisted ? "Removed from wishlist" : "Added to wishlist",
+                                    isWishlisted
+                                        ? "Removed from wishlist"
+                                        : "Added to wishlist",
                                   ),
                                   duration: const Duration(seconds: 1),
                                 ),
@@ -113,7 +123,8 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "đ${product.old_price}",
@@ -125,26 +136,30 @@ class ProductCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 4),
-                      Text(
-                        "đ${product.new_price}",
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      const Icon(
-                        Icons.arrow_downward,
-                        color: Colors.green,
-                        size: 14,
-                      ),
-                      Text(
-                        "${discountPercent(product.old_price, product.new_price)}%",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            "đ${product.new_price}",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          const Icon(
+                            Icons.arrow_downward,
+                            color: Colors.green,
+                            size: 14,
+                          ),
+                          Text(
+                            "${discountPercent(product.old_price, product.new_price)}%",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
